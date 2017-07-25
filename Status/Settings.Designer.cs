@@ -131,6 +131,7 @@
             // diskFrame
             // 
             this.diskFrame.Controls.Add(this.checkbox_disk1);
+            this.diskFrame.Enabled = false;
             this.diskFrame.ForeColor = System.Drawing.Color.White;
             this.diskFrame.Location = new System.Drawing.Point(3, 74);
             this.diskFrame.Name = "diskFrame";
@@ -142,8 +143,6 @@
             // checkbox_disk1
             // 
             this.checkbox_disk1.AutoSize = true;
-            this.checkbox_disk1.Checked = true;
-            this.checkbox_disk1.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkbox_disk1.Location = new System.Drawing.Point(6, 19);
             this.checkbox_disk1.Name = "checkbox_disk1";
             this.checkbox_disk1.Size = new System.Drawing.Size(107, 17);

@@ -44,19 +44,5 @@ namespace Status
 
             return myIcon.ToBitmap();
         }
-
-        public static int getFreeSpace(int n)
-        {
-            try
-            {
-                DriveInfo drive = UI.window.drives[n];
-                double freeSpace = 100 - (double)drive.TotalFreeSpace / (double)drive.TotalSize * 100;
-                return (int)freeSpace;
-            }
-            catch
-            {
-                return 0;
-            }
-        }
     }
 }

@@ -20,7 +20,7 @@ namespace Status
         private void btn_close_click(object sender, EventArgs e)
         {
             UI.window.player.settings.volume = Properties.Settings.Default.playervolume;
-            this.Close();
+            Close();
         }
 
         private void btn_save_click(object sender, EventArgs e)
@@ -43,9 +43,9 @@ namespace Status
 
             Properties.Settings.Default.Save();
 
-            UI.window.updateSettings();
+            UI.window.UpdateSettings();
 
-            this.Close();
+            Close();
         }
 
         private void window_loading(object sender, EventArgs e)
@@ -76,12 +76,12 @@ namespace Status
         private void volume_changing(object sender, EventArgs e)
         {
             UI.window.player.settings.volume = volumeBar.Value;
-            volumeTooltip.SetToolTip(this.volumeBar, volumeBar.Value.ToString());
+            volumeTooltip.SetToolTip(volumeBar, volumeBar.Value.ToString());
         }
 
         private void volumeBar_mouse_enter(object sender, EventArgs e)
         {
-            volumeTooltip.SetToolTip(this.volumeBar, volumeBar.Value.ToString());
+            volumeTooltip.SetToolTip(volumeBar, volumeBar.Value.ToString());
         }
     }
 }

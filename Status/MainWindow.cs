@@ -20,18 +20,13 @@ namespace Status
     {
         private const int WM_MOUSEACTIVATE = 0x0021;
         private const int MA_NOACTIVATEANDEAT = 0x0004;
-        PerformanceCounter cpuCounter = new PerformanceCounter("Processor", "% Processor Time", "_Total");
-        PerformanceCounter diskCounter = new PerformanceCounter("PhysicalDisk", "% Idle Time", "_Total");
-        PowerStatus power = SystemInformation.PowerStatus;
-        ComputerInfo PC = new ComputerInfo();
-        Timer timer, driveTimer;
-        public DriveInfo[] drives;
-        public List<DriveBox> driveBoxes;
-        public int driveCount;
-        public int allDrives = 0;
-        public int showbatteryFrame = 1;
-        public int showdiskFrame = 1;
-
+        private PerformanceCounter cpuCounter = new PerformanceCounter("Processor", "% Processor Time", "_Total");
+        //private PerformanceCounter diskCounter = new PerformanceCounter("PhysicalDisk", "% Idle Time", "_Total");
+        private PowerStatus power = SystemInformation.PowerStatus;
+        private ComputerInfo PC = new ComputerInfo();
+        private Timer timer, driveTimer;
+        private DriveInfo[] drives;
+        public List<DriveBox> driveBoxes = new List<DriveBox>();
         private Hotkey hotkey;
         
         public mainWindow()
@@ -44,7 +39,7 @@ namespace Status
             Top = 100;
             batteryBar.invertedCritical = true;
 
-            updateSettings();
+            UpdateSettings();
 
             playerinfo.Visible = false;
             mediaFrame.Height = 50;
@@ -67,101 +62,62 @@ namespace Status
         private void updateFast(object sender, EventArgs e)
         {
             cpuBar.Value = (int)cpuCounter.NextValue();
-            float percent = 100 - (float)PC.AvailablePhysicalMemory / (float)PC.TotalPhysicalMemory * 100;
-            ramBar.Value = (int)percent;
-            Screen myScreen = Screen.FromControl(this);
-            Rectangle area = myScreen.WorkingArea;
-            Left = area.Width - 210;
+            ramBar.Value = GetUsedRAM();
+            Left = Screen.FromControl(this).WorkingArea.Width - 210;
 
-            if (showdiskFrame == 1)
+            /*if (Properties.Settings.Default.disk)
             {
-                int temp = 100 - (int)diskCounter.NextValue();
+                int temp = 100 - (int)Math.Round(diskCounter.NextValue());
                 if (temp >= 0 && temp <= 100)
                 {
                     diskBar.Value = temp;
                 }
-            }
+            }*/
         }
 
         private void updateSlow(object sender, EventArgs e)
         {
-            batteryBar.Value = (int)(power.BatteryLifePercent * 100);
-            if (Properties.Settings.Default.battery1)
+            batteryBar.Value = (int)Math.Round(power.BatteryLifePercent * 100);
+            if (batteryFrame.Visible = Properties.Settings.Default.battery1)
             {
                 if (power.PowerLineStatus == PowerLineStatus.Online)
                 {
                     BatteryImg.Image = Properties.Resources.Line;
-                    if (Properties.Settings.Default.battery2)
-                    {
-                        batteryFrame.Visible = true;
-                        showbatteryFrame = 1;
-                        setHeight();
-                    }
-                    else
-                    {
-                        batteryFrame.Visible = false;
-                        showbatteryFrame = 0;
-                        setHeight();
-                    }
+                    batteryFrame.Visible = Properties.Settings.Default.battery2;
                 }
                 else
                 {
                     BatteryImg.Image = Properties.Resources.Battery;
-                    if (Properties.Settings.Default.battery1)
-                    {
-                        batteryFrame.Visible = true;
-                        showbatteryFrame = 1;
-                    }
-                    else
-                    {
-                        batteryFrame.Visible = false;
-                        showbatteryFrame = 0;
-                    }
                 }
-            }
-            else
-            {
-                showbatteryFrame = 0;
-                batteryFrame.Visible = false;
             }
 
             drives = DriveInfo.GetDrives();
-            if (drives.Length != allDrives)
+            if (drives.Length != driveBoxes.Count)
             {
-                allDrives = drives.Length;
-                driveCount = 0;
                 driveFrame.Controls.Clear();
-                driveBoxes = new List<DriveBox>();
+                driveBoxes.Clear();
 
-                for (int n = 0; n < allDrives; n++)
+                foreach(DriveInfo drive in drives)
                 {
-                    if (drives[n].IsReady)
-                    {
-                        driveBoxes.Add(new DriveBox(n));
-                        driveCount++;
-                    }
+                    driveBoxes.Add(new DriveBox(drive));
                 }
-                driveFrame.Height = 27 + driveCount * 22;
-                setHeight();
+
+                driveFrame.Height = 27 + drives.Length * 22;
             }
             else
             {
-                foreach (DriveBox drivebox in driveBoxes)
+                for (int i = 0; i < driveBoxes.Count; i++)
                 {
-                    int newvalue = Win32.getFreeSpace(drivebox.driveIndex);
-                    if (drivebox.progressbar.Value != newvalue)
-                    {
-                        drivebox.progressbar.Value = newvalue;
-                    }
-
-                    string newtext = drives[drivebox.driveIndex].Name;
-                    if (drivebox.label.Text != newtext)
-                    {
-                        drivebox.label.Text = newtext;
-                        drivebox.picturebox.Image = Win32.getImage(newtext);
-                    }
+                    driveBoxes[i].Update(drives[i]);
                 }
             }
+
+            UpdateHeight();
+        }
+
+        private int GetUsedRAM()
+        {
+            return (int)Math.Round(100 - (double)PC.AvailablePhysicalMemory / (double)PC.TotalPhysicalMemory * 100);
         }
 
         protected override void WndProc(ref Message m)
@@ -218,7 +174,7 @@ namespace Status
             btn_stop.BackColor = UI.grey;
             playerinfo.Visible = false;
             mediaFrame.Height = 50;
-            setHeight();
+            UpdateHeight();
         }
 
         private void playOrPause()
@@ -237,7 +193,7 @@ namespace Status
                     playerinfo.Text = "...";
                     playerinfo.Visible = true;
                     mediaFrame.Height = 75;
-                    setHeight();
+                    UpdateHeight();
 
                     if (player.playState == WMPPlayState.wmppsPaused)
                     {
@@ -259,117 +215,68 @@ namespace Status
             }
         }
 
-        public void updateSettings()
+        public void UpdateSettings()
         {
-            if (Properties.Settings.Default.disk)
-            {
-                showdiskFrame = 1;
-                diskFrame.Visible = true;
-            }
-            else
-            {
-                showdiskFrame = 0;
-                diskFrame.Visible = false;
-            }
+            diskFrame.Visible = Properties.Settings.Default.disk;
 
-            if (Properties.Settings.Default.battery1)
+            if (batteryFrame.Visible = Properties.Settings.Default.battery1)
             {
                 if (power.PowerLineStatus == PowerLineStatus.Online)
                 {
-                    if (Properties.Settings.Default.battery2)
-                    {
-                        batteryFrame.Visible = true;
-                        showbatteryFrame = 1;
-                    }
-                    else
-                    {
-                        batteryFrame.Visible = false;
-                        showbatteryFrame = 0;
-                    }
+                    batteryFrame.Visible = Properties.Settings.Default.battery2;
                 }
-                else
-                {
-                    if (Properties.Settings.Default.battery1)
-                    {
-                        batteryFrame.Visible = true;
-                        showbatteryFrame = 1;
-                    }
-                    else
-                    {
-                        batteryFrame.Visible = false;
-                        showbatteryFrame = 0;
-                    }
-                }
-            }
-            else
-            {
-                showbatteryFrame = 0;
-                batteryFrame.Visible = false;
             }
 
             player.settings.volume = Properties.Settings.Default.playervolume;
 
-            setHeight();
+            UpdateHeight();
         }
 
         private void mouse_move(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
-                Screen myScreen = Screen.FromControl(this);
-                Rectangle area = myScreen.WorkingArea;
-                if (Cursor.Position.Y <= area.Height - this.Height)
-                {
-                    this.Top = Cursor.Position.Y;
-                }
-                else
-                {
-                    this.Top = area.Height - this.Height;
-                }
+                Rectangle ScreenArea = Screen.FromControl(this).WorkingArea;
+                Top = Math.Min(Cursor.Position.Y, ScreenArea.Height - Height);
             }
         }
 
         private void player_statechanged(object sender, AxWMPLib._WMPOCXEvents_PlayStateChangeEvent e)
         {
-            if (player.playState == WMPPlayState.wmppsPlaying)
-            {
-                btn_play.Text = "Pause";
-                btn_play.BackColor = UI.blue;
-                playerinfo.Text = player.currentMedia.name;
+            switch (player.playState) {
+                case WMPPlayState.wmppsPlaying:
+                    btn_play.Text = "Pause";
+                    btn_play.BackColor = UI.blue;
+                    playerinfo.Text = player.currentMedia.name;
+                    break;
+                case WMPPlayState.wmppsReconnecting:
+                case WMPPlayState.wmppsTransitioning:
+                case WMPPlayState.wmppsBuffering:
+                    playerinfo.Text = "loading...";
+                    break;
+                case WMPPlayState.wmppsPaused:
+                    playerinfo.Text = "paused";
+                    break;
+                default:
+                    playerinfo.Text = player.playState.ToString();
+                    break;
             }
-            else if (player.playState == WMPPlayState.wmppsTransitioning || player.playState == WMPPlayState.wmppsBuffering)
-            {
-                playerinfo.Text = "loading...";
-            }
-            else if (player.playState == WMPPlayState.wmppsPaused)
-            {
-                playerinfo.Text = "paused";
-            }
-            else if (player.playState == WMPPlayState.wmppsReady)
-            {
-                //btn_stop_click("d", EventArgs.Empty);
-            }
+            playerinfo.Text = player.playState.ToString();
         }
 
         private void mainWindow_FormClosing(object sender, FormClosingEventArgs e)
         {
             timer.Dispose();
             driveTimer.Dispose();
+            hotkey.Unregiser();
             System.Threading.Thread.Sleep(20);
         }
 
-        private void setHeight()
+        private void UpdateHeight()
         {
-            if (playerinfo.Visible)
-            {
-                contentPanel.Height = 195 + 55 * showbatteryFrame + 55 * showdiskFrame + driveCount * 22;
-                this.Height = 215 + 55 * showbatteryFrame + 55 * showdiskFrame + driveCount * 22;
-            }
-            else
-            {
-                contentPanel.Height = 170 + 55 * showbatteryFrame + 55 * showdiskFrame + driveCount * 22;
-                this.Height = 190 + 55 * showbatteryFrame + 55 * showdiskFrame + driveCount * 22;
-            }
+            int baseHeight = 93 + (batteryFrame.Visible ? 55 : 0) + (diskFrame.Visible ? 55 : 0);
+            contentPanel.Height = baseHeight + driveFrame.Height + mediaFrame.Height;
+            Height = contentPanel.Height + 20;
         }
     }
 }
