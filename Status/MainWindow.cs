@@ -261,7 +261,7 @@ namespace Status
                     playerinfo.Text = player.playState.ToString();
                     break;
             }
-            playerinfo.Text = player.playState.ToString();
+            //playerinfo.Text = player.playState.ToString();
         }
 
         private void mainWindow_FormClosing(object sender, FormClosingEventArgs e)
