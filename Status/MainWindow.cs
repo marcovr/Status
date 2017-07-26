@@ -18,97 +18,87 @@ namespace Status
 {
     public partial class mainWindow : Form
     {
-        private const int WM_MOUSEACTIVATE = 0x0021;
-        private const int MA_NOACTIVATEANDEAT = 0x0004;
         private PerformanceCounter cpuCounter = new PerformanceCounter("Processor", "% Processor Time", "_Total");
-        //private PerformanceCounter diskCounter = new PerformanceCounter("PhysicalDisk", "% Idle Time", "_Total");
         private PowerStatus power = SystemInformation.PowerStatus;
         private ComputerInfo PC = new ComputerInfo();
-        private Timer timer, driveTimer;
+        private Timer fastTimer, slowTimer;
         private DriveInfo[] drives;
-        public List<DriveBox> driveBoxes = new List<DriveBox>();
+        public List<DriveItem> driveItems = new List<DriveItem>();
         private Hotkey hotkey;
         
         public mainWindow()
         {
             InitializeComponent();
             UI.window = this;
-            Screen myScreen = Screen.FromControl(this);
-            Rectangle area = myScreen.WorkingArea;
-            Left = area.Width - 210;
             Top = 100;
-            batteryBar.invertedCritical = true;
 
             UpdateSettings();
 
             playerinfo.Visible = false;
             mediaFrame.Height = 50;
 
-            updateFast(null, new EventArgs());
-            updateSlow(null, new EventArgs());
+            UpdateFast(null, null);
+            UpdateSlow(null, null);
 
-            driveTimer = new Timer() { Interval = 5000 };
-            driveTimer.Tick += updateSlow;
-            driveTimer.Start();
+            slowTimer = new Timer() { Interval = 5000 };
+            slowTimer.Tick += UpdateSlow;
+            slowTimer.Start();
 
-            timer = new Timer() { Interval = 1000 };
-            timer.Tick += updateFast;
-            timer.Start();
+            fastTimer = new Timer() { Interval = 1000 };
+            fastTimer.Tick += UpdateFast;
+            fastTimer.Start();
 
-            hotkey = new Hotkey(Hotkey.Modifiers.NOMOD, Keys.MediaPlayPause, this);
+            hotkey = new Hotkey(Hotkey.Modifiers.None, Keys.MediaPlayPause);
+            hotkey.Fired += Hotkey_Fired;
             hotkey.Register();
         }
 
-        private void updateFast(object sender, EventArgs e)
+        private void UpdateFast(object sender, EventArgs e)
         {
-            cpuBar.Value = (int)cpuCounter.NextValue();
-            ramBar.Value = GetUsedRAM();
+            cpuItem.Value = (int)cpuCounter.NextValue();
+            ramItem.Value = GetUsedRAM();
             Left = Screen.FromControl(this).WorkingArea.Width - 210;
-
-            /*if (Properties.Settings.Default.disk)
-            {
-                int temp = 100 - (int)Math.Round(diskCounter.NextValue());
-                if (temp >= 0 && temp <= 100)
-                {
-                    diskBar.Value = temp;
-                }
-            }*/
         }
 
-        private void updateSlow(object sender, EventArgs e)
+        private void UpdateSlow(object sender, EventArgs e)
         {
-            batteryBar.Value = (int)Math.Round(power.BatteryLifePercent * 100);
+            batteryItem.Value = (int)Math.Round(power.BatteryLifePercent * 100);
             if (batteryFrame.Visible = Properties.Settings.Default.battery1)
             {
                 if (power.PowerLineStatus == PowerLineStatus.Online)
                 {
-                    BatteryImg.Image = Properties.Resources.Line;
+                    batteryItem.Image = Properties.Resources.Line;
                     batteryFrame.Visible = Properties.Settings.Default.battery2;
                 }
                 else
                 {
-                    BatteryImg.Image = Properties.Resources.Battery;
+                    batteryItem.Image = Properties.Resources.Battery;
                 }
             }
 
             drives = DriveInfo.GetDrives();
-            if (drives.Length != driveBoxes.Count)
+            if (drives.Length != driveItems.Count)
             {
                 driveFrame.Controls.Clear();
-                driveBoxes.Clear();
+                driveItems.Clear();
 
-                foreach(DriveInfo drive in drives)
+                for (int i = 0; i < drives.Length; i++)
                 {
-                    driveBoxes.Add(new DriveBox(drive));
+                    DriveItem driveI = new DriveItem(drives[i])
+                    {
+                        Location = new Point(4, 17 + i * 22)
+                    };
+                    driveItems.Add(driveI);
+                    UI.window.driveFrame.Controls.Add(driveI);
                 }
 
                 driveFrame.Height = 27 + drives.Length * 22;
             }
             else
             {
-                for (int i = 0; i < driveBoxes.Count; i++)
+                for (int i = 0; i < drives.Length; i++)
                 {
-                    driveBoxes[i].Update(drives[i]);
+                    driveItems[i].Update(drives[i]);
                 }
             }
 
@@ -120,64 +110,65 @@ namespace Status
             return (int)Math.Round(100 - (double)PC.AvailablePhysicalMemory / (double)PC.TotalPhysicalMemory * 100);
         }
 
-        protected override void WndProc(ref Message m)
+        private void Btn_stop_click(object sender, EventArgs e)
         {
-            if (m.Msg == Hotkey.Constants.WM_HOTKEY_MSG_ID)
+            if (!IsMediaStopped())
             {
-                if (btn_stop.BackColor == UI.blue)
-                {
-                    stop();
-                }
-                else
-                {
-                    playOrPause();
-                }
-            }
-            base.WndProc(ref m);
-        }
-
-        private void btn_stop_click(object sender, EventArgs e)
-        {
-            if (btn_stop.BackColor == UI.blue)
-            {
-                stop();
+                Stop();
             }
         }
 
-        private void btn_play_click(object sender, EventArgs e)
+        private void Btn_play_click(object sender, EventArgs e)
         {
-            playOrPause();
+            PlayOrPause();
         }
 
-        private void btn_close_click(object sender, EventArgs e)
+        private void Btn_close_click(object sender, EventArgs e)
         {
-            Environment.Exit(1);
+            Application.Exit();
+            //Environment.Exit(0);
         }
 
-        private void btn_settings_click(object sender, EventArgs e)
+        private void Btn_settings_click(object sender, EventArgs e)
         {
-            Settings SettingsWindow = new Settings();
-            SettingsWindow.Show();
+            new SettingsWindow().Show();
         }
 
-        private void playerinfo_Click(object sender, EventArgs e)
+        private void Playerinfo_Click(object sender, EventArgs e)
         {
-            PlaylistFlyout f = new PlaylistFlyout();
-            f.Show();
+            new PlaylistWindow().Show();
         }
 
-        private void stop()
+        private void Hotkey_Fired()
+        {
+            if (!IsMediaStopped())
+            {
+                Stop();
+            }
+            else
+            {
+                PlayOrPause();
+            }
+        }
+
+        private bool IsMediaStopped()
+        {
+            return btn_stop.BackColor != UI.blue;
+        }
+
+        private void Stop()
         {
             player.Ctlcontrols.stop();
             btn_play.Text = "Play";
             btn_play.BackColor = UI.blue;
             btn_stop.BackColor = UI.grey;
+            playerinfo.Text = "...";
             playerinfo.Visible = false;
             mediaFrame.Height = 50;
             UpdateHeight();
         }
 
-        private void playOrPause()
+        private void PlayOrPause()
         {
             if (btn_play.BackColor == UI.blue)
             {
@@ -190,7 +181,6 @@ namespace Status
                 {
                     btn_stop.BackColor = UI.blue;
                     btn_play.BackColor = UI.grey;
-                    playerinfo.Text = "...";
                     playerinfo.Visible = true;
                     mediaFrame.Height = 75;
                     UpdateHeight();
@@ -217,8 +207,6 @@ namespace Status
 
         public void UpdateSettings()
         {
-            diskFrame.Visible = Properties.Settings.Default.disk;
-
             if (batteryFrame.Visible = Properties.Settings.Default.battery1)
             {
                 if (power.PowerLineStatus == PowerLineStatus.Online)
@@ -232,7 +220,7 @@ namespace Status
             UpdateHeight();
         }
 
-        private void mouse_move(object sender, MouseEventArgs e)
+        private void Mouse_moved(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
@@ -241,7 +229,7 @@ namespace Status
             }
         }
 
-        private void player_statechanged(object sender, AxWMPLib._WMPOCXEvents_PlayStateChangeEvent e)
+        private void Player_statechanged(object sender, AxWMPLib._WMPOCXEvents_PlayStateChangeEvent e)
         {
             switch (player.playState) {
                 case WMPPlayState.wmppsPlaying:
@@ -264,17 +252,18 @@ namespace Status
             //playerinfo.Text = player.playState.ToString();
         }
 
-        private void mainWindow_FormClosing(object sender, FormClosingEventArgs e)
+        private void MainWindow_FormClosing(object sender, FormClosingEventArgs e)
         {
-            timer.Dispose();
-            driveTimer.Dispose();
-            hotkey.Unregiser();
-            System.Threading.Thread.Sleep(20);
+            fastTimer.Dispose();
+            slowTimer.Dispose();
+            cpuCounter.Dispose();
+            player.Dispose();
+            Hotkey.UnregisterAll();
         }
 
         private void UpdateHeight()
         {
-            int baseHeight = 93 + (batteryFrame.Visible ? 55 : 0) + (diskFrame.Visible ? 55 : 0);
+            int baseHeight = 93 + (batteryFrame.Visible ? 55 : 0);
             contentPanel.Height = baseHeight + driveFrame.Height + mediaFrame.Height;
             Height = contentPanel.Height + 20;
         }
