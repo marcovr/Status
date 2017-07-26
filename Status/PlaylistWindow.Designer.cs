@@ -1,6 +1,6 @@
 ﻿namespace Status
 {
-    partial class PlaylistFlyout
+    partial class PlaylistWindow
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PlaylistFlyout));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PlaylistWindow));
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
             this.contentPanel = new System.Windows.Forms.TableLayoutPanel();
@@ -100,7 +100,7 @@
             this.btn_close.Size = new System.Drawing.Size(16, 16);
             this.btn_close.TabIndex = 5;
             this.btn_close.UseVisualStyleBackColor = false;
-            this.btn_close.Click += new System.EventHandler(this.btn_close_click);
+            this.btn_close.Click += new System.EventHandler(this.Btn_close_click);
             // 
             // PlaylistFlyout
             // 
@@ -118,7 +118,7 @@
             this.Name = "PlaylistFlyout";
             this.ShowInTaskbar = false;
             this.Text = "Settings";
-            this.Load += new System.EventHandler(this.window_loading);
+            this.Load += new System.EventHandler(this.Window_loading);
             this.contentPanel.ResumeLayout(false);
             this.playlistFrame.ResumeLayout(false);
             this.ResumeLayout(false);
