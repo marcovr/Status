@@ -258,7 +258,7 @@ namespace Status
             slowTimer.Dispose();
             cpuCounter.Dispose();
             player.Dispose();
-            Hotkey.UnregisterAll();
+            Hotkey.Dispose();
         }
 
         private void UpdateHeight()

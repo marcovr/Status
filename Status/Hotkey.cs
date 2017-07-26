@@ -46,13 +46,13 @@ namespace Status
             return manager.Unregister(this);
 	    }
 
-        public static void UnregisterAll()
+        public static void Dispose()
         {
-            manager.UnregisterAll();
+            manager.Dispose();
         }
 
         // pseudo-window to manage hotkeys
-        private class HotkeyManager : NativeWindow
+        private class HotkeyManager : NativeWindow, IDisposable
         {
             [DllImport("user32.dll")]
             private static extern bool RegisterHotKey(IntPtr hWnd, int id, int fsModifiers, int vk);
@@ -63,6 +63,12 @@ namespace Status
             //windows message id for hotkey
             private const int WM_HOTKEY_MSG_ID = 0x0312;
             private static List<Hotkey> hotkeys = new List<Hotkey>();
+
+            public HotkeyManager()
+            {
+                // create the handle for the window.
+                CreateHandle(new CreateParams());
+            }
 
             protected override void WndProc(ref Message m)
             {
@@ -97,13 +103,14 @@ namespace Status
                 return UnregisterHotKey(Handle, hotkey.id);
             }
 
-            public void UnregisterAll()
+            public void Dispose()
             {
                 foreach (Hotkey hotkey in hotkeys)
                 {
                     UnregisterHotKey(Handle, hotkey.id);
                 }
                 hotkeys.Clear();
+                DestroyHandle();
             }
         }
     }
