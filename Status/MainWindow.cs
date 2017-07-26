@@ -30,6 +30,7 @@ namespace Status
         {
             InitializeComponent();
             UI.window = this;
+            ResizeRedraw = true;
             Top = 100;
 
             UpdateSettings();
@@ -266,6 +267,12 @@ namespace Status
             int baseHeight = 93 + (batteryFrame.Visible ? 55 : 0);
             contentPanel.Height = baseHeight + driveFrame.Height + mediaFrame.Height;
             Height = contentPanel.Height + 20;
+        }
+
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            e.Graphics.DrawRectangle(UI.border, 1, 1, Width - 2, Height - 2);
+            base.OnPaint(e);
         }
     }
 }

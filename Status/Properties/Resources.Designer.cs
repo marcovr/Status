@@ -73,26 +73,6 @@ namespace Status.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap BG {
-            get {
-                object obj = ResourceManager.GetObject("BG", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap BG2 {
-            get {
-                object obj = ResourceManager.GetObject("BG2", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap CPU {
             get {
                 object obj = ResourceManager.GetObject("CPU", resourceCulture);

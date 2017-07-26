@@ -74,5 +74,11 @@ namespace Status
         {
             volumeTooltip.SetToolTip(volumeBar, volumeBar.Value.ToString());
         }
+
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            e.Graphics.DrawRectangle(UI.border, 1, 1, Width - 2, Height - 2);
+            base.OnPaint(e);
+        }
     }
 }

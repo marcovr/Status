@@ -30,8 +30,6 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsWindow));
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.panel2 = new System.Windows.Forms.Panel();
             this.contentPanel = new System.Windows.Forms.TableLayoutPanel();
             this.batteryFrame = new System.Windows.Forms.GroupBox();
             this.checkbox_battery2 = new System.Windows.Forms.CheckBox();
@@ -53,24 +51,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.volumeBar)).BeginInit();
             this.panel3.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // panel1
-            // 
-            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(122)))), ((int)(((byte)(204)))));
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(200, 2);
-            this.panel1.TabIndex = 3;
-            // 
-            // panel2
-            // 
-            this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(122)))), ((int)(((byte)(204)))));
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel2.Location = new System.Drawing.Point(0, 246);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(200, 2);
-            this.panel2.TabIndex = 4;
             // 
             // contentPanel
             // 
@@ -239,20 +219,17 @@
             // 
             this.volumeTooltip.ToolTipTitle = "Volume";
             // 
-            // Settings
+            // SettingsWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(37)))), ((int)(((byte)(38)))));
-            this.BackgroundImage = global::Status.Properties.Resources.BG;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(48)))));
             this.ClientSize = new System.Drawing.Size(200, 248);
             this.Controls.Add(this.btn_close);
             this.Controls.Add(this.contentPanel);
-            this.Controls.Add(this.panel2);
-            this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "Settings";
+            this.Name = "SettingsWindow";
             this.ShowInTaskbar = false;
             this.Text = "Settings";
             this.Load += new System.EventHandler(this.Window_loading);
@@ -268,9 +245,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.TableLayoutPanel contentPanel;
         private System.Windows.Forms.GroupBox batteryFrame;
         private System.Windows.Forms.GroupBox mediaFrame;

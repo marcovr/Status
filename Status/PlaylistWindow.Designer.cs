@@ -29,8 +29,6 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PlaylistWindow));
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.panel2 = new System.Windows.Forms.Panel();
             this.contentPanel = new System.Windows.Forms.TableLayoutPanel();
             this.playlistFrame = new System.Windows.Forms.GroupBox();
             this.playlist = new System.Windows.Forms.FlowLayoutPanel();
@@ -38,24 +36,6 @@
             this.contentPanel.SuspendLayout();
             this.playlistFrame.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // panel1
-            // 
-            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(122)))), ((int)(((byte)(204)))));
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(400, 2);
-            this.panel1.TabIndex = 3;
-            // 
-            // panel2
-            // 
-            this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(122)))), ((int)(((byte)(204)))));
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel2.Location = new System.Drawing.Point(0, 328);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(400, 2);
-            this.panel2.TabIndex = 4;
             // 
             // contentPanel
             // 
@@ -102,20 +82,17 @@
             this.btn_close.UseVisualStyleBackColor = false;
             this.btn_close.Click += new System.EventHandler(this.Btn_close_click);
             // 
-            // PlaylistFlyout
+            // PlaylistWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(37)))), ((int)(((byte)(38)))));
-            this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(48)))));
             this.ClientSize = new System.Drawing.Size(400, 330);
             this.Controls.Add(this.btn_close);
             this.Controls.Add(this.contentPanel);
-            this.Controls.Add(this.panel2);
-            this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "PlaylistFlyout";
+            this.Name = "PlaylistWindow";
             this.ShowInTaskbar = false;
             this.Text = "Settings";
             this.Load += new System.EventHandler(this.Window_loading);
@@ -126,9 +103,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.TableLayoutPanel contentPanel;
         private System.Windows.Forms.GroupBox playlistFrame;
         private System.Windows.Forms.Button btn_close;

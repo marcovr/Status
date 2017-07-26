@@ -40,8 +40,6 @@
             this.btn_stop = new System.Windows.Forms.Button();
             this.btn_play = new System.Windows.Forms.Button();
             this.playerinfo = new System.Windows.Forms.Label();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.panel2 = new System.Windows.Forms.Panel();
             this.player = new AxWMPLib.AxWindowsMediaPlayer();
             this.btn_close = new System.Windows.Forms.Button();
             this.btn_settings = new System.Windows.Forms.Button();
@@ -188,24 +186,6 @@
             this.playerinfo.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.playerinfo.Click += new System.EventHandler(this.Playerinfo_Click);
             // 
-            // panel1
-            // 
-            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(122)))), ((int)(((byte)(204)))));
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(200, 2);
-            this.panel1.TabIndex = 2;
-            // 
-            // panel2
-            // 
-            this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(122)))), ((int)(((byte)(204)))));
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel2.Location = new System.Drawing.Point(0, 312);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(200, 2);
-            this.panel2.TabIndex = 3;
-            // 
             // player
             // 
             this.player.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -241,13 +221,10 @@
             // mainWindow
             // 
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(48)))));
-            this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.ClientSize = new System.Drawing.Size(200, 314);
             this.Controls.Add(this.btn_settings);
             this.Controls.Add(this.btn_close);
             this.Controls.Add(this.player);
-            this.Controls.Add(this.panel2);
-            this.Controls.Add(this.panel1);
             this.Controls.Add(this.contentPanel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -272,8 +249,6 @@
         private System.Windows.Forms.GroupBox cpuFrame;
         public System.Windows.Forms.GroupBox driveFrame;
         private System.Windows.Forms.GroupBox batteryFrame;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Panel panel2;
         public AxWMPLib.AxWindowsMediaPlayer player;
         private System.Windows.Forms.GroupBox mediaFrame;
         private System.Windows.Forms.Button btn_stop;
