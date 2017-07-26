@@ -10,33 +10,25 @@ using System.Windows.Forms;
 
 namespace Status
 {
-    public partial class Settings : Form
+    public partial class SettingsWindow : Form
     {
-        public Settings()
+        public SettingsWindow()
         {
             InitializeComponent();
         }
 
-        private void btn_close_click(object sender, EventArgs e)
+        private void Btn_close_click(object sender, EventArgs e)
         {
             UI.window.player.settings.volume = Properties.Settings.Default.playervolume;
             Close();
         }
 
-        private void btn_save_click(object sender, EventArgs e)
+        private void Btn_save_click(object sender, EventArgs e)
         {
             //Save
             Properties.Settings.Default.battery1 = checkbox_battery1.Checked;
             Properties.Settings.Default.battery2 = checkbox_battery2.Checked;
-            Properties.Settings.Default.disk = checkbox_disk1.Checked;
-            if (radioButton1.Checked)
-            {
-                Properties.Settings.Default.playersource = 0;
-            }
-            else
-            {
-                Properties.Settings.Default.playersource = 1;
-            }
+            Properties.Settings.Default.playersource = radioButton1.Checked ? 0 : 1;
             Properties.Settings.Default.playersource1 = textBox1.Text;
             Properties.Settings.Default.playersource2 = textBox2.Text;
             Properties.Settings.Default.playervolume = volumeBar.Value;
@@ -48,7 +40,7 @@ namespace Status
             Close();
         }
 
-        private void window_loading(object sender, EventArgs e)
+        private void Window_loading(object sender, EventArgs e)
         {
             Screen myScreen = Screen.FromControl(this);
             Rectangle area = myScreen.WorkingArea;
@@ -57,7 +49,6 @@ namespace Status
             
             checkbox_battery1.Checked = Properties.Settings.Default.battery1;
             checkbox_battery2.Checked = Properties.Settings.Default.battery2;
-            checkbox_disk1.Checked = Properties.Settings.Default.disk;
             if (Properties.Settings.Default.playersource == 0)
             {
                 radioButton1.Checked = true;
@@ -73,13 +64,13 @@ namespace Status
             volumeBar.Value = Properties.Settings.Default.playervolume;
         }
 
-        private void volume_changing(object sender, EventArgs e)
+        private void Volume_changing(object sender, EventArgs e)
         {
             UI.window.player.settings.volume = volumeBar.Value;
             volumeTooltip.SetToolTip(volumeBar, volumeBar.Value.ToString());
         }
 
-        private void volumeBar_mouse_enter(object sender, EventArgs e)
+        private void VolumeBar_mouse_enter(object sender, EventArgs e)
         {
             volumeTooltip.SetToolTip(volumeBar, volumeBar.Value.ToString());
         }
