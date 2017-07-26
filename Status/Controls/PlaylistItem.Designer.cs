@@ -53,7 +53,7 @@
             this.album.Size = new System.Drawing.Size(80, 80);
             this.album.TabIndex = 0;
             this.album.TabStop = false;
-            this.album.Click += new System.EventHandler(this.album_Click);
+            this.album.Click += new System.EventHandler(this.Album_Click);
             // 
             // wholabel
             // 
