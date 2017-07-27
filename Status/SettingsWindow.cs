@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace Status
 {
-    public partial class SettingsWindow : Form
+    public partial class SettingsWindow : BaseForm
     {
         public SettingsWindow()
         {
@@ -73,12 +73,6 @@ namespace Status
         private void VolumeBar_mouse_enter(object sender, EventArgs e)
         {
             volumeTooltip.SetToolTip(volumeBar, volumeBar.Value.ToString());
-        }
-
-        protected override void OnPaint(PaintEventArgs e)
-        {
-            e.Graphics.DrawRectangle(UI.border, 1, 1, Width - 2, Height - 2);
-            base.OnPaint(e);
         }
     }
 }

@@ -84,6 +84,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\BaseForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\BaseForm.Designer.cs">
+      <DependentUpon>BaseForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\DriveItem.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -130,22 +136,22 @@
     </Compile>
     <Compile Include="UI.cs" />
     <Compile Include="Win32.cs" />
-    <EmbeddedResource Include="MainWindow.resx">
-      <DependentUpon>MainWindow.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\BaseForm.resx">
+      <DependentUpon>BaseForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\PlaylistItem.resx">
       <DependentUpon>PlaylistItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainWindow.resx">
+      <DependentUpon>MainWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PlaylistWindow.resx">
+      <DependentUpon>PlaylistWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="PlaylistWindow.resx">
-      <DependentUpon>PlaylistWindow.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SettingsWindow.resx">
-      <DependentUpon>SettingsWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\StatusItem.resx">
       <DependentUpon>StatusItem.cs</DependentUpon>

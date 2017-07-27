@@ -16,7 +16,7 @@ using WMPLib;
 
 namespace Status
 {
-    public partial class mainWindow : Form
+    public partial class mainWindow : BaseForm
     {
         private PerformanceCounter cpuCounter = new PerformanceCounter("Processor", "% Processor Time", "_Total");
         private PowerStatus power = SystemInformation.PowerStatus;
@@ -30,7 +30,6 @@ namespace Status
         {
             InitializeComponent();
             UI.window = this;
-            ResizeRedraw = true;
             Top = 100;
 
             UpdateSettings();
@@ -221,15 +220,6 @@ namespace Status
             UpdateHeight();
         }
 
-        private void Mouse_moved(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-            {
-                Rectangle ScreenArea = Screen.FromControl(this).WorkingArea;
-                Top = Math.Min(Cursor.Position.Y, ScreenArea.Height - Height);
-            }
-        }
-
         private void Player_statechanged(object sender, AxWMPLib._WMPOCXEvents_PlayStateChangeEvent e)
         {
             switch (player.playState) {
@@ -267,12 +257,6 @@ namespace Status
             int baseHeight = 93 + (batteryFrame.Visible ? 55 : 0);
             contentPanel.Height = baseHeight + driveFrame.Height + mediaFrame.Height;
             Height = contentPanel.Height + 20;
-        }
-
-        protected override void OnPaint(PaintEventArgs e)
-        {
-            e.Graphics.DrawRectangle(UI.border, 1, 1, Width - 2, Height - 2);
-            base.OnPaint(e);
         }
     }
 }

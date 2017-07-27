@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PlaylistWindow));
             this.contentPanel = new System.Windows.Forms.TableLayoutPanel();
             this.playlistFrame = new System.Windows.Forms.GroupBox();
             this.playlist = new System.Windows.Forms.FlowLayoutPanel();
@@ -74,6 +73,7 @@
             // 
             // btn_close
             // 
+            this.btn_close.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btn_close.BackColor = System.Drawing.Color.Red;
             this.btn_close.Location = new System.Drawing.Point(382, 2);
             this.btn_close.Name = "btn_close";
@@ -86,15 +86,12 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(48)))));
             this.ClientSize = new System.Drawing.Size(400, 330);
             this.Controls.Add(this.btn_close);
             this.Controls.Add(this.contentPanel);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MinimumSize = new System.Drawing.Size(400, 200);
             this.Name = "PlaylistWindow";
-            this.ShowInTaskbar = false;
-            this.Text = "Settings";
+            this.Text = "Playlist";
             this.Load += new System.EventHandler(this.Window_loading);
             this.contentPanel.ResumeLayout(false);
             this.playlistFrame.ResumeLayout(false);

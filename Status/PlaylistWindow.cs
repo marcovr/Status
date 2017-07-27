@@ -11,7 +11,7 @@ using System.Xml;
 
 namespace Status
 {
-    public partial class PlaylistWindow : Form
+    public partial class PlaylistWindow : BaseForm
     {
         private const string SWR3_XML = "http://mobile.swr3.de/common/nocache/swr3live.xml";
         private Timer timer;
@@ -84,39 +84,6 @@ namespace Status
         {
             timer.Dispose();
             Close();
-        }
-
-
-        private const int cGrip = 16;      // Grip size
-        private const int cCaption = 32;   // Caption bar height;
-        private const int WM_NCHITTEST_MSG_ID = 0x84;
-        private const int HTCAPTION = 2;
-        private const int HTBOTTOMRIGHT = 17;
-
-        protected override void WndProc(ref Message m)
-        {
-            if (m.Msg == WM_NCHITTEST_MSG_ID)
-            {  // Trap Hittest
-                Point pos = new Point(m.LParam.ToInt32() & 0xffff, m.LParam.ToInt32() >> 16);
-                pos = PointToClient(pos);
-                if (pos.Y < cCaption)
-                {
-                    m.Result = (IntPtr)HTCAPTION;  // drag
-                    return;
-                }
-                /*if (pos.X >= ClientSize.Width - cGrip && pos.Y >= ClientSize.Height - cGrip)
-                {
-                    m.Result = (IntPtr)HTBOTTOMRIGHT; // resize
-                    return;
-                }*/
-            }
-            base.WndProc(ref m);
-        }
-
-        protected override void OnPaint(PaintEventArgs e)
-        {
-            e.Graphics.DrawRectangle(UI.border, 1, 1, Width - 2, Height - 2);
-            base.OnPaint(e);
         }
     }
 }
