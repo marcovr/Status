@@ -31,8 +31,11 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(mainWindow));
             this.contentPanel = new System.Windows.Forms.TableLayoutPanel();
             this.cpuFrame = new System.Windows.Forms.GroupBox();
+            this.ramItem = new Status.StatusItem();
+            this.cpuItem = new Status.StatusItem();
             this.driveFrame = new System.Windows.Forms.GroupBox();
             this.batteryFrame = new System.Windows.Forms.GroupBox();
+            this.batteryItem = new Status.StatusItem();
             this.mediaFrame = new System.Windows.Forms.GroupBox();
             this.btn_stop = new System.Windows.Forms.Button();
             this.btn_play = new System.Windows.Forms.Button();
@@ -40,9 +43,6 @@
             this.player = new AxWMPLib.AxWindowsMediaPlayer();
             this.btn_close = new System.Windows.Forms.Button();
             this.btn_settings = new System.Windows.Forms.Button();
-            this.ramItem = new Status.StatusItem();
-            this.cpuItem = new Status.StatusItem();
-            this.batteryItem = new Status.StatusItem();
             this.contentPanel.SuspendLayout();
             this.cpuFrame.SuspendLayout();
             this.batteryFrame.SuspendLayout();
@@ -82,6 +82,28 @@
             this.cpuFrame.TabStop = false;
             this.cpuFrame.Text = "CPU / RAM";
             // 
+            // ramItem
+            // 
+            this.ramItem.Image = global::Status.Properties.Resources.RAM;
+            this.ramItem.InvertedCritical = false;
+            this.ramItem.Label = "%";
+            this.ramItem.Location = new System.Drawing.Point(4, 39);
+            this.ramItem.Name = "ramItem";
+            this.ramItem.Size = new System.Drawing.Size(166, 20);
+            this.ramItem.TabIndex = 7;
+            this.ramItem.Value = 0;
+            // 
+            // cpuItem
+            // 
+            this.cpuItem.Image = global::Status.Properties.Resources.CPU;
+            this.cpuItem.InvertedCritical = false;
+            this.cpuItem.Label = "%";
+            this.cpuItem.Location = new System.Drawing.Point(4, 17);
+            this.cpuItem.Name = "cpuItem";
+            this.cpuItem.Size = new System.Drawing.Size(166, 20);
+            this.cpuItem.TabIndex = 6;
+            this.cpuItem.Value = 0;
+            // 
             // driveFrame
             // 
             this.driveFrame.ForeColor = System.Drawing.Color.White;
@@ -102,6 +124,17 @@
             this.batteryFrame.TabIndex = 6;
             this.batteryFrame.TabStop = false;
             this.batteryFrame.Text = "Battery";
+            // 
+            // batteryItem
+            // 
+            this.batteryItem.Image = global::Status.Properties.Resources.Battery;
+            this.batteryItem.InvertedCritical = true;
+            this.batteryItem.Label = "%";
+            this.batteryItem.Location = new System.Drawing.Point(4, 17);
+            this.batteryItem.Name = "batteryItem";
+            this.batteryItem.Size = new System.Drawing.Size(166, 20);
+            this.batteryItem.TabIndex = 5;
+            this.batteryItem.Value = 0;
             // 
             // mediaFrame
             // 
@@ -187,39 +220,6 @@
             this.btn_settings.UseVisualStyleBackColor = false;
             this.btn_settings.Click += new System.EventHandler(this.Btn_settings_click);
             // 
-            // ramItem
-            // 
-            this.ramItem.Image = global::Status.Properties.Resources.RAM;
-            this.ramItem.InvertedCritical = false;
-            this.ramItem.Label = "%";
-            this.ramItem.Location = new System.Drawing.Point(4, 39);
-            this.ramItem.Name = "ramItem";
-            this.ramItem.Size = new System.Drawing.Size(166, 20);
-            this.ramItem.TabIndex = 7;
-            this.ramItem.Value = 0;
-            // 
-            // cpuItem
-            // 
-            this.cpuItem.Image = global::Status.Properties.Resources.CPU;
-            this.cpuItem.InvertedCritical = false;
-            this.cpuItem.Label = "%";
-            this.cpuItem.Location = new System.Drawing.Point(4, 17);
-            this.cpuItem.Name = "cpuItem";
-            this.cpuItem.Size = new System.Drawing.Size(166, 20);
-            this.cpuItem.TabIndex = 6;
-            this.cpuItem.Value = 0;
-            // 
-            // batteryItem
-            // 
-            this.batteryItem.Image = global::Status.Properties.Resources.Battery;
-            this.batteryItem.InvertedCritical = true;
-            this.batteryItem.Label = "%";
-            this.batteryItem.Location = new System.Drawing.Point(4, 17);
-            this.batteryItem.Name = "batteryItem";
-            this.batteryItem.Size = new System.Drawing.Size(166, 20);
-            this.batteryItem.TabIndex = 5;
-            this.batteryItem.Value = 0;
-            // 
             // mainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -234,7 +234,6 @@
             this.Resizable = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-            this.Text = "Status";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainWindow_FormClosing);
             this.contentPanel.ResumeLayout(false);
             this.cpuFrame.ResumeLayout(false);

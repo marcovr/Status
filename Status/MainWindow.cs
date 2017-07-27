@@ -13,6 +13,7 @@ using System.Diagnostics;
 using Microsoft.VisualBasic.Devices;
 using System.Management;
 using WMPLib;
+using Status.Properties;
 
 namespace Status
 {
@@ -21,6 +22,7 @@ namespace Status
         private PerformanceCounter cpuCounter = new PerformanceCounter("Processor", "% Processor Time", "_Total");
         private PowerStatus power = SystemInformation.PowerStatus;
         private ComputerInfo PC = new ComputerInfo();
+        private Settings Settings = Properties.Settings.Default;
         private Timer fastTimer, slowTimer;
         private DriveInfo[] drives;
         public List<DriveItem> driveItems = new List<DriveItem>();
@@ -32,13 +34,9 @@ namespace Status
             UI.window = this;
             Top = 100;
 
-            UpdateSettings();
-
             playerinfo.Visible = false;
             mediaFrame.Height = 50;
-
-            UpdateFast(null, null);
-            UpdateSlow(null, null);
+            UpdateSettings();
 
             slowTimer = new Timer() { Interval = 5000 };
             slowTimer.Tick += UpdateSlow;
@@ -67,16 +65,16 @@ namespace Status
         private void UpdateSlow(object sender, EventArgs e)
         {
             batteryItem.Value = (int)Math.Round(power.BatteryLifePercent * 100);
-            if (batteryFrame.Visible = Properties.Settings.Default.battery1)
+            if (batteryFrame.Visible = Settings.battery1)
             {
                 if (power.PowerLineStatus == PowerLineStatus.Online)
                 {
-                    batteryItem.Image = Properties.Resources.Line;
-                    batteryFrame.Visible = Properties.Settings.Default.battery2;
+                    batteryItem.Image = Resources.Line;
+                    batteryFrame.Visible = Settings.battery2;
                 }
                 else
                 {
-                    batteryItem.Image = Properties.Resources.Battery;
+                    batteryItem.Image = Resources.Battery;
                 }
             }
 
@@ -116,7 +114,7 @@ namespace Status
 
         private void Btn_stop_click(object sender, EventArgs e)
         {
-            if (!IsMediaStopped())
+            if (StopButtonEnabled())
             {
                 Stop();
             }
@@ -145,7 +143,7 @@ namespace Status
 
         private void Mediakey_Fired()
         {
-            if (!IsMediaStopped())
+            if (StopButtonEnabled())
             {
                 Stop();
             }
@@ -160,9 +158,14 @@ namespace Status
             new PlaylistWindow().Show();
         }
 
-        private bool IsMediaStopped()
+        private bool StopButtonEnabled()
         {
-            return btn_stop.BackColor != UI.blue;
+            return btn_stop.BackColor == UI.blue;
+        }
+
+        private bool MediaButtonEnabled()
+        {
+            return btn_play.BackColor == UI.blue;
         }
 
         private void Stop()
@@ -179,58 +182,44 @@ namespace Status
 
         private void PlayOrPause()
         {
-            if (btn_play.BackColor == UI.blue)
+            if (!MediaButtonEnabled())
             {
-                if (player.playState == WMPPlayState.wmppsPlaying)
+                return;
+            }
+            if (player.playState == WMPPlayState.wmppsPlaying)
+            {
+                player.Ctlcontrols.pause();
+                btn_play.Text = "Play";
+            }
+            else
+            {
+                if (player.playState == WMPPlayState.wmppsPaused)
                 {
-                    player.Ctlcontrols.pause();
-                    btn_play.Text = "Play";
+                    player.Ctlcontrols.play();
                 }
                 else
                 {
+                    player.Ctlcontrols.stop();
+                    player.URL = (string)Settings["playersource" + Settings.playersource];
                     btn_stop.BackColor = UI.blue;
                     btn_play.BackColor = UI.grey;
                     playerinfo.Visible = true;
                     mediaFrame.Height = 75;
                     UpdateHeight();
-
-                    if (player.playState == WMPPlayState.wmppsPaused)
-                    {
-                        player.Ctlcontrols.play();
-                    }
-                    else
-                    {
-                        player.Ctlcontrols.stop();
-                        if (Properties.Settings.Default.playersource == 0)
-                        {
-                            player.URL = Properties.Settings.Default.playersource1;
-                        }
-                        else
-                        {
-                            player.URL = Properties.Settings.Default.playersource2;
-                        }
-                    }
                 }
             }
         }
 
         public void UpdateSettings()
         {
-            if (batteryFrame.Visible = Properties.Settings.Default.battery1)
-            {
-                if (power.PowerLineStatus == PowerLineStatus.Online)
-                {
-                    batteryFrame.Visible = Properties.Settings.Default.battery2;
-                }
-            }
-
-            player.settings.volume = Properties.Settings.Default.playervolume;
-
-            UpdateHeight();
+            player.settings.volume = Settings.playervolume;
+            UpdateSlow(null, null);
+            UpdateFast(null, null);
         }
 
         private void Player_statechanged(object sender, AxWMPLib._WMPOCXEvents_PlayStateChangeEvent e)
         {
+            //Debug.Print(player.playState.ToString());
             switch (player.playState) {
                 case WMPPlayState.wmppsPlaying:
                     btn_play.Text = "Pause";
@@ -240,6 +229,7 @@ namespace Status
                 case WMPPlayState.wmppsReconnecting:
                 case WMPPlayState.wmppsTransitioning:
                 case WMPPlayState.wmppsBuffering:
+                    btn_play.BackColor = UI.grey;
                     playerinfo.Text = "loading...";
                     break;
                 case WMPPlayState.wmppsPaused:

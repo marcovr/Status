@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Status.Properties;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,6 +13,8 @@ namespace Status
 {
     public partial class SettingsWindow : BaseForm
     {
+        private Settings Settings = Properties.Settings.Default;
+
         public SettingsWindow()
         {
             InitializeComponent();
@@ -19,21 +22,21 @@ namespace Status
 
         private void Btn_close_click(object sender, EventArgs e)
         {
-            UI.window.player.settings.volume = Properties.Settings.Default.playervolume;
+            UI.window.player.settings.volume = Settings.playervolume;
             Close();
         }
 
         private void Btn_save_click(object sender, EventArgs e)
         {
             //Save
-            Properties.Settings.Default.battery1 = checkbox_battery1.Checked;
-            Properties.Settings.Default.battery2 = checkbox_battery2.Checked;
-            Properties.Settings.Default.playersource = radioButton1.Checked ? 0 : 1;
-            Properties.Settings.Default.playersource1 = textBox1.Text;
-            Properties.Settings.Default.playersource2 = textBox2.Text;
-            Properties.Settings.Default.playervolume = volumeBar.Value;
+            Settings.battery1 = checkbox_battery1.Checked;
+            Settings.battery2 = checkbox_battery2.Checked;
+            Settings.playersource = radioButton1.Checked ? 1 : 2;
+            Settings.playersource1 = textBox1.Text;
+            Settings.playersource2 = textBox2.Text;
+            Settings.playervolume = volumeBar.Value;
 
-            Properties.Settings.Default.Save();
+            Settings.Save();
 
             UI.window.UpdateSettings();
 
@@ -47,21 +50,13 @@ namespace Status
             Left = area.Width - 230;
             Top = 120;
             
-            checkbox_battery1.Checked = Properties.Settings.Default.battery1;
-            checkbox_battery2.Checked = Properties.Settings.Default.battery2;
-            if (Properties.Settings.Default.playersource == 0)
-            {
-                radioButton1.Checked = true;
-                radioButton2.Checked = false;
-            }
-            else
-            {
-                radioButton1.Checked = false;
-                radioButton2.Checked = true;
-            }
-            textBox1.Text = Properties.Settings.Default.playersource1;
-            textBox2.Text = Properties.Settings.Default.playersource2;
-            volumeBar.Value = Properties.Settings.Default.playervolume;
+            checkbox_battery1.Checked = Settings.battery1;
+            checkbox_battery2.Checked = Settings.battery2;
+            radioButton1.Checked = Settings.playersource == 1;
+            radioButton2.Checked = Settings.playersource == 2;
+            textBox1.Text = Settings.playersource1;
+            textBox2.Text = Settings.playersource2;
+            volumeBar.Value = Settings.playervolume;
         }
 
         private void Volume_changing(object sender, EventArgs e)
