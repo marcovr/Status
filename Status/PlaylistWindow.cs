@@ -19,6 +19,7 @@ namespace Status
         public PlaylistWindow()
         {
             InitializeComponent();
+            playlist.Padding = new Padding(0, 0, SystemInformation.VerticalScrollBarWidth, 0);
         }
 
         private void Window_loading(object sender, EventArgs e)
@@ -59,7 +60,8 @@ namespace Status
                         Time = node.ChildNodes[2].InnerText,
                         ImageURL = node.ChildNodes[3].InnerText
                     };
-                    playlist.Controls.Add(item);
+                    playlist.Controls.Add(item, 0, i - 1);
+                    item.Anchor = AnchorStyles.Left | AnchorStyles.Right;
                 }
                 if (playlist.Controls.Count >= 2)
                 {

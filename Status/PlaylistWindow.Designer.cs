@@ -30,7 +30,7 @@
         {
             this.contentPanel = new System.Windows.Forms.TableLayoutPanel();
             this.playlistFrame = new System.Windows.Forms.GroupBox();
-            this.playlist = new System.Windows.Forms.FlowLayoutPanel();
+            this.playlist = new System.Windows.Forms.TableLayoutPanel();
             this.btn_close = new System.Windows.Forms.Button();
             this.contentPanel.SuspendLayout();
             this.playlistFrame.SuspendLayout();
@@ -38,37 +38,45 @@
             // 
             // contentPanel
             // 
+            this.contentPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.contentPanel.BackColor = System.Drawing.Color.Transparent;
             this.contentPanel.ColumnCount = 1;
             this.contentPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.contentPanel.Controls.Add(this.playlistFrame, 0, 1);
             this.contentPanel.Location = new System.Drawing.Point(12, 12);
             this.contentPanel.Name = "contentPanel";
-            this.contentPanel.RowCount = 4;
+            this.contentPanel.RowCount = 1;
             this.contentPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.contentPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.contentPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.contentPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.contentPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.contentPanel.Size = new System.Drawing.Size(376, 306);
             this.contentPanel.TabIndex = 5;
             // 
             // playlistFrame
             // 
+            this.playlistFrame.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.playlistFrame.Controls.Add(this.playlist);
             this.playlistFrame.ForeColor = System.Drawing.Color.White;
             this.playlistFrame.Location = new System.Drawing.Point(3, 3);
             this.playlistFrame.Name = "playlistFrame";
-            this.playlistFrame.Size = new System.Drawing.Size(373, 303);
+            this.playlistFrame.Size = new System.Drawing.Size(373, 300);
             this.playlistFrame.TabIndex = 8;
             this.playlistFrame.TabStop = false;
             this.playlistFrame.Text = "Playlist";
             // 
             // playlist
             // 
+            this.playlist.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.playlist.AutoScroll = true;
+            this.playlist.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.playlist.Location = new System.Drawing.Point(6, 19);
             this.playlist.Name = "playlist";
-            this.playlist.Size = new System.Drawing.Size(361, 278);
+            this.playlist.Size = new System.Drawing.Size(361, 275);
             this.playlist.TabIndex = 0;
             // 
             // btn_close
@@ -103,6 +111,6 @@
         private System.Windows.Forms.TableLayoutPanel contentPanel;
         private System.Windows.Forms.GroupBox playlistFrame;
         private System.Windows.Forms.Button btn_close;
-        private System.Windows.Forms.FlowLayoutPanel playlist;
+        private System.Windows.Forms.TableLayoutPanel playlist;
     }
 }
