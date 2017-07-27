@@ -24,7 +24,7 @@ namespace Status
         private Timer fastTimer, slowTimer;
         private DriveInfo[] drives;
         public List<DriveItem> driveItems = new List<DriveItem>();
-        private Hotkey hotkey;
+        private Hotkey mediakey, playlistkey;
         
         public mainWindow()
         {
@@ -48,9 +48,13 @@ namespace Status
             fastTimer.Tick += UpdateFast;
             fastTimer.Start();
 
-            hotkey = new Hotkey(Hotkey.Modifiers.None, Keys.MediaPlayPause);
-            hotkey.Fired += Hotkey_Fired;
-            hotkey.Register();
+            mediakey = new Hotkey(Hotkey.Modifiers.None, Keys.MediaPlayPause);
+            mediakey.Fired += Mediakey_Fired;
+            mediakey.Register();
+
+            playlistkey = new Hotkey(Hotkey.Modifiers.None, Keys.SelectMedia);
+            playlistkey.Fired += Playlistkey_Fired;
+            playlistkey.Register();
         }
 
         private void UpdateFast(object sender, EventArgs e)
@@ -139,7 +143,7 @@ namespace Status
             new PlaylistWindow().Show();
         }
 
-        private void Hotkey_Fired()
+        private void Mediakey_Fired()
         {
             if (!IsMediaStopped())
             {
@@ -149,6 +153,11 @@ namespace Status
             {
                 PlayOrPause();
             }
+        }
+
+        private void Playlistkey_Fired()
+        {
+            new PlaylistWindow().Show();
         }
 
         private bool IsMediaStopped()
