@@ -138,7 +138,9 @@ namespace Status
 
         private void Playerinfo_Click(object sender, EventArgs e)
         {
-            new PlaylistWindow().Show();
+            PlaylistWindow playlist = new PlaylistWindow();
+            playlist.Show();
+            playlist.Activate();
         }
 
         private void Mediakey_Fired()
@@ -155,7 +157,9 @@ namespace Status
 
         private void Playlistkey_Fired()
         {
-            new PlaylistWindow().Show();
+            PlaylistWindow playlist = new PlaylistWindow();
+            playlist.Show();
+            playlist.Activate();
         }
 
         private bool StopButtonEnabled()
