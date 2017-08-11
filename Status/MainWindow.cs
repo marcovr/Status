@@ -27,7 +27,7 @@ namespace Status
         private DriveInfo[] drives;
         public List<DriveItem> driveItems = new List<DriveItem>();
         private Hotkey mediakey, playlistkey;
-        private int retrycount = 0;
+        private int retrycount = -1;
         
         public mainWindow()
         {
@@ -175,7 +175,7 @@ namespace Status
 
         private void Stop()
         {
-            retrycount = 0;
+            retrycount = -1;
             player.Ctlcontrols.stop();
             btn_play.Text = "Play";
             btn_play.BackColor = UI.blue;
@@ -192,14 +192,15 @@ namespace Status
             {
                 return;
             }
-            retrycount = 0;
             if (player.playState == WMPPlayState.wmppsPlaying)
             {
+                retrycount = -1;
                 player.Ctlcontrols.pause();
                 btn_play.Text = "Play";
             }
             else
             {
+                retrycount = 0;
                 if (player.playState == WMPPlayState.wmppsPaused)
                 {
                     player.Ctlcontrols.play();
@@ -231,7 +232,7 @@ namespace Status
 
         private async void Player_statechanged(object sender, AxWMPLib._WMPOCXEvents_PlayStateChangeEvent e)
         {
-            //Debug.Print(player.playState.ToString());
+            Debug.Print(player.playState.ToString());
             switch (player.playState) {
                 case WMPPlayState.wmppsReady:
                     retrycount++;
@@ -261,7 +262,7 @@ namespace Status
                     playerinfo.Text = "loading...";
                     break;
                 case WMPPlayState.wmppsPaused:
-                    retrycount = 0;
+                    retrycount = -1;
                     playerinfo.Text = "paused";
                     break;
                 default:
