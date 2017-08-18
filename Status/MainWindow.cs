@@ -255,8 +255,10 @@ namespace Status
                     btn_play.BackColor = UI.blue;
                     playerinfo.Text = player.currentMedia.name;
                     break;
-                case WMPPlayState.wmppsReconnecting:
                 case WMPPlayState.wmppsTransitioning:
+                    playerinfo.Text = "loading...";
+                    break;
+                case WMPPlayState.wmppsReconnecting:
                 case WMPPlayState.wmppsBuffering:
                     btn_play.BackColor = UI.grey;
                     playerinfo.Text = "loading...";
