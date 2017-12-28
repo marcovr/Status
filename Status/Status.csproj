@@ -106,6 +106,7 @@
     <Compile Include="Controls\PlaylistItem.Designer.cs">
       <DependentUpon>PlaylistItem.cs</DependentUpon>
     </Compile>
+    <Compile Include="PerformanceStats.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Controls\SmoothProgressBar.cs">
       <SubType>Component</SubType>

@@ -1,17 +1,10 @@
 ﻿using System;
 using System.IO;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Runtime.InteropServices;
 using System.Diagnostics;
-using Microsoft.VisualBasic.Devices;
-using System.Management;
 using WMPLib;
 using Status.Properties;
 
@@ -19,9 +12,7 @@ namespace Status
 {
     public partial class mainWindow : BaseForm
     {
-        private PerformanceCounter cpuCounter = new PerformanceCounter("Processor", "% Processor Time", "_Total");
-        private PowerStatus power = SystemInformation.PowerStatus;
-        private ComputerInfo PC = new ComputerInfo();
+        private PerformanceStats stats = new PerformanceStats();
         private Settings Settings = Properties.Settings.Default;
         private Timer fastTimer, slowTimer;
         private DriveInfo[] drives;
@@ -58,17 +49,17 @@ namespace Status
 
         private void UpdateFast(object sender, EventArgs e)
         {
-            cpuItem.Value = (int)cpuCounter.NextValue();
-            ramItem.Value = GetUsedRAM();
+            cpuItem.Value = stats.CPULoad;
+            ramItem.Value = stats.RAMUsage;
             Left = Screen.FromControl(this).WorkingArea.Width - 210;
         }
 
         private void UpdateSlow(object sender, EventArgs e)
         {
-            batteryItem.Value = (int)Math.Round(power.BatteryLifePercent * 100);
             if (batteryFrame.Visible = Settings.battery1)
             {
-                if (power.PowerLineStatus == PowerLineStatus.Online)
+                batteryItem.Value = stats.BatteryPercent;
+                if (stats.BatteryCharging)
                 {
                     batteryItem.Image = Resources.Line;
                     batteryFrame.Visible = Settings.battery2;
@@ -106,11 +97,6 @@ namespace Status
             }
 
             UpdateHeight();
-        }
-
-        private int GetUsedRAM()
-        {
-            return (int)Math.Round(100 - (double)PC.AvailablePhysicalMemory / (double)PC.TotalPhysicalMemory * 100);
         }
 
         private void Btn_stop_click(object sender, EventArgs e)
@@ -278,7 +264,7 @@ namespace Status
         {
             fastTimer.Dispose();
             slowTimer.Dispose();
-            cpuCounter.Dispose();
+            stats.Dispose();
             player.Dispose();
             Hotkey.Dispose();
         }

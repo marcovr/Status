@@ -1,12 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.IO;
 
 namespace Status
@@ -42,7 +34,8 @@ namespace Status
         {
             try
             {
-                return (int)Math.Round(100 - (double)drive.TotalFreeSpace / (double)drive.TotalSize * 100);
+                double fraction = (double)drive.TotalFreeSpace / drive.TotalSize;
+                return (int)Math.Round(100 - fraction * 100);
             }
             catch
             {
