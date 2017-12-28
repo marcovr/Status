@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Status
@@ -63,19 +56,7 @@ namespace Status
             }
         }
 
-        public string ImageURL
-        {
-            get
-            {
-                return album.ImageLocation;
-            }
-            set
-            {
-                album.LoadAsync(value);
-            }
-        }
-
-        private void Album_Click(object sender, EventArgs e)
+        private void Title_Click(object sender, EventArgs e)
         {
             Clipboard.SetText($"{wholabel.Text} {titlelabel.Text}");
             System.Diagnostics.Process.Start(ytdl, $"{wholabel.Text} | {titlelabel.Text}");

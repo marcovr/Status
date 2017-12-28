@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Newtonsoft.Json;
+using System;
+using System.IO;
+using System.Net;
 using System.Windows.Forms;
 using System.Xml;
 
@@ -13,7 +9,7 @@ namespace Status
 {
     public partial class PlaylistWindow : BaseForm
     {
-        private const string SWR3_XML = "http://mobile.swr3.de/common/nocache/swr3live.xml";
+        private const string SWR3_JSON = "https://www.swr3.de/ext/cf=42/actions/feed/index.json";
         private Timer timer;
 
         public PlaylistWindow()
@@ -39,7 +35,18 @@ namespace Status
             XmlDocument dom = new XmlDocument();
             try
             {
-                dom.Load(SWR3_XML);
+                string XML;
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(SWR3_JSON);
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                using (StreamReader s = new StreamReader(response.GetResponseStream()))
+                {
+                    string content = s.ReadToEnd();
+                    dynamic data = JsonConvert.DeserializeObject(content);
+                    string xmlcontent = data.update["#nowplaying"];
+                    XML = "<root>" + xmlcontent + "</root>";
+                }
+
+                dom.LoadXml(XML);
             }
             catch (Exception err)
             {
@@ -50,34 +57,32 @@ namespace Status
 
             if (playlist.Controls.Count == 0)
             {
-                for (int i = 1; i < swr3.ChildNodes.Count; i++)
+                for (int i = 0; i < swr3.ChildNodes.Count; i++)
                 {
                     XmlNode node = swr3.ChildNodes[i];
                     PlaylistItem item = new PlaylistItem()
                     {
-                        Title = node.ChildNodes[1].InnerText,
-                        Who = node.FirstChild.InnerText,
-                        Time = node.ChildNodes[2].InnerText,
-                        ImageURL = node.ChildNodes[3].InnerText
+                        Title = node.LastChild.InnerText.Trim(),
+                        Who = node.ChildNodes[1].InnerText.Trim(),
+                        Time = node.FirstChild.InnerText.Trim(),
                     };
-                    playlist.Controls.Add(item, 0, i - 1);
+                    playlist.Controls.Add(item, 0, i);
                     item.Anchor = AnchorStyles.Left | AnchorStyles.Right;
                 }
-                if (playlist.Controls.Count >= 2)
+                if (playlist.Controls.Count >= 1)
                 {
-                    ((PlaylistItem)playlist.Controls[1]).SetCurrent();
+                    ((PlaylistItem)playlist.Controls[0]).SetCurrent();
                 }
             }
             else
             {
-                for (int i = 1; i < swr3.ChildNodes.Count - 1; i++)
+                for (int i = 0; i < swr3.ChildNodes.Count; i++)
                 {
                     XmlNode node = swr3.ChildNodes[i];
-                    PlaylistItem item = (PlaylistItem)playlist.Controls[i - 1];
-                    item.Title = node.ChildNodes[1].InnerText;
-                    item.Who = node.FirstChild.InnerText;
-                    item.Time = node.ChildNodes[2].InnerText;
-                    item.ImageURL = node.ChildNodes[3].InnerText;
+                    PlaylistItem item = (PlaylistItem)playlist.Controls[i];
+                    item.Title = node.LastChild.InnerText.Trim();
+                    item.Who = node.ChildNodes[1].InnerText.Trim();
+                    item.Time = node.FirstChild.InnerText.Trim();
                 }
             }
         }
