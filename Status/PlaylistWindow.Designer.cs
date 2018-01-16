@@ -50,40 +50,37 @@
             this.contentPanel.RowCount = 1;
             this.contentPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.contentPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.contentPanel.Size = new System.Drawing.Size(376, 306);
+            this.contentPanel.Size = new System.Drawing.Size(176, 306);
             this.contentPanel.TabIndex = 5;
             // 
             // playlistFrame
             // 
-            this.playlistFrame.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.playlistFrame.Controls.Add(this.playlist);
+            this.playlistFrame.Dock = System.Windows.Forms.DockStyle.Fill;
             this.playlistFrame.ForeColor = System.Drawing.Color.White;
             this.playlistFrame.Location = new System.Drawing.Point(3, 3);
             this.playlistFrame.Name = "playlistFrame";
-            this.playlistFrame.Size = new System.Drawing.Size(373, 300);
+            this.playlistFrame.Size = new System.Drawing.Size(173, 300);
             this.playlistFrame.TabIndex = 8;
             this.playlistFrame.TabStop = false;
             this.playlistFrame.Text = "Playlist";
             // 
             // playlist
             // 
-            this.playlist.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.playlist.AutoScroll = true;
+            this.playlist.ColumnCount = 1;
             this.playlist.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.playlist.Location = new System.Drawing.Point(6, 19);
+            this.playlist.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.playlist.Location = new System.Drawing.Point(3, 16);
             this.playlist.Name = "playlist";
-            this.playlist.Size = new System.Drawing.Size(361, 275);
+            this.playlist.Size = new System.Drawing.Size(167, 281);
             this.playlist.TabIndex = 0;
             // 
             // btn_close
             // 
             this.btn_close.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btn_close.BackColor = System.Drawing.Color.Red;
-            this.btn_close.Location = new System.Drawing.Point(382, 2);
+            this.btn_close.Location = new System.Drawing.Point(182, 2);
             this.btn_close.Name = "btn_close";
             this.btn_close.Size = new System.Drawing.Size(16, 16);
             this.btn_close.TabIndex = 5;
@@ -94,10 +91,9 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(400, 330);
+            this.ClientSize = new System.Drawing.Size(200, 330);
             this.Controls.Add(this.btn_close);
             this.Controls.Add(this.contentPanel);
-            this.MinimumSize = new System.Drawing.Size(400, 200);
             this.Name = "PlaylistWindow";
             this.Text = "Playlist";
             this.Load += new System.EventHandler(this.Window_loading);

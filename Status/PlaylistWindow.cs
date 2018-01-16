@@ -15,6 +15,7 @@ namespace Status
         public PlaylistWindow()
         {
             InitializeComponent();
+            this.ClientSize = new System.Drawing.Size(400, 330);
             playlist.Padding = new Padding(0, 0, SystemInformation.VerticalScrollBarWidth, 0);
         }
 
@@ -73,6 +74,7 @@ namespace Status
                 {
                     ((PlaylistItem)playlist.Controls[0]).SetCurrent();
                 }
+                playlist.Controls.Add(new Control(), 0, playlist.Controls.Count);
             }
             else
             {
