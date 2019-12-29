@@ -15,7 +15,6 @@ namespace Status
         public PlaylistWindow()
         {
             InitializeComponent();
-            this.ClientSize = new System.Drawing.Size(400, 330);
             playlist.Padding = new Padding(0, 0, SystemInformation.VerticalScrollBarWidth, 0);
         }
 

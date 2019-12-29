@@ -50,17 +50,18 @@
             this.contentPanel.RowCount = 1;
             this.contentPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.contentPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.contentPanel.Size = new System.Drawing.Size(176, 306);
+            this.contentPanel.Size = new System.Drawing.Size(376, 306);
             this.contentPanel.TabIndex = 5;
             // 
             // playlistFrame
             // 
             this.playlistFrame.Controls.Add(this.playlist);
             this.playlistFrame.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.playlistFrame.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.playlistFrame.ForeColor = System.Drawing.Color.White;
             this.playlistFrame.Location = new System.Drawing.Point(3, 3);
             this.playlistFrame.Name = "playlistFrame";
-            this.playlistFrame.Size = new System.Drawing.Size(173, 300);
+            this.playlistFrame.Size = new System.Drawing.Size(370, 300);
             this.playlistFrame.TabIndex = 8;
             this.playlistFrame.TabStop = false;
             this.playlistFrame.Text = "Playlist";
@@ -73,14 +74,14 @@
             this.playlist.Dock = System.Windows.Forms.DockStyle.Fill;
             this.playlist.Location = new System.Drawing.Point(3, 16);
             this.playlist.Name = "playlist";
-            this.playlist.Size = new System.Drawing.Size(167, 281);
+            this.playlist.Size = new System.Drawing.Size(364, 281);
             this.playlist.TabIndex = 0;
             // 
             // btn_close
             // 
             this.btn_close.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btn_close.BackColor = System.Drawing.Color.Red;
-            this.btn_close.Location = new System.Drawing.Point(182, 2);
+            this.btn_close.Location = new System.Drawing.Point(382, 2);
             this.btn_close.Name = "btn_close";
             this.btn_close.Size = new System.Drawing.Size(16, 16);
             this.btn_close.TabIndex = 5;
@@ -89,9 +90,9 @@
             // 
             // PlaylistWindow
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(200, 330);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+            this.ClientSize = new System.Drawing.Size(400, 330);
             this.Controls.Add(this.btn_close);
             this.Controls.Add(this.contentPanel);
             this.Name = "PlaylistWindow";

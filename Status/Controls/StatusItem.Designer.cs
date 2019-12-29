@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.pictureBox = new System.Windows.Forms.PictureBox();
-            this.progressBar = new Status.SmoothProgressBar();
             this.label = new System.Windows.Forms.Label();
+            this.progressBar = new Status.SmoothProgressBar();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             this.SuspendLayout();
             // 
@@ -39,8 +39,19 @@
             this.pictureBox.Location = new System.Drawing.Point(2, 2);
             this.pictureBox.Name = "pictureBox";
             this.pictureBox.Size = new System.Drawing.Size(16, 16);
+            this.pictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox.TabIndex = 0;
             this.pictureBox.TabStop = false;
+            // 
+            // label
+            // 
+            this.label.AutoSize = true;
+            this.label.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.GraphicsUnit.Point);
+            this.label.Location = new System.Drawing.Point(145, 4);
+            this.label.Name = "label";
+            this.label.Size = new System.Drawing.Size(15, 13);
+            this.label.TabIndex = 2;
+            this.label.Text = "%";
             // 
             // progressBar
             // 
@@ -49,19 +60,10 @@
             this.progressBar.Size = new System.Drawing.Size(115, 16);
             this.progressBar.TabIndex = 1;
             // 
-            // label
-            // 
-            this.label.AutoSize = true;
-            this.label.Location = new System.Drawing.Point(145, 4);
-            this.label.Name = "label";
-            this.label.Size = new System.Drawing.Size(15, 13);
-            this.label.TabIndex = 2;
-            this.label.Text = "%";
-            // 
             // StatusItem
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.Controls.Add(this.label);
             this.Controls.Add(this.progressBar);
             this.Controls.Add(this.pictureBox);

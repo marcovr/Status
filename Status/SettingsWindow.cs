@@ -12,6 +12,10 @@ namespace Status
         public SettingsWindow()
         {
             InitializeComponent();
+            checkbox_battery1.Top = LogicalToDeviceUnits(17);
+            checkbox_battery2.Top = LogicalToDeviceUnits(40);
+            radioButton1.Top = LogicalToDeviceUnits(20);
+            radioButton2.Top = LogicalToDeviceUnits(46);
         }
 
         private void Btn_close_click(object sender, EventArgs e)
@@ -41,8 +45,8 @@ namespace Status
         {
             Screen myScreen = Screen.FromControl(this);
             Rectangle area = myScreen.WorkingArea;
-            Left = area.Width - 230;
-            Top = 120;
+            Left = area.Width - LogicalToDeviceUnits(230);
+            Top = LogicalToDeviceUnits(120);
             
             checkbox_battery1.Checked = Settings.battery1;
             checkbox_battery2.Checked = Settings.battery2;

@@ -74,6 +74,7 @@
             // 
             this.cpuFrame.Controls.Add(this.ramItem);
             this.cpuFrame.Controls.Add(this.cpuItem);
+            this.cpuFrame.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.cpuFrame.ForeColor = System.Drawing.Color.White;
             this.cpuFrame.Location = new System.Drawing.Point(3, 3);
             this.cpuFrame.Name = "cpuFrame";
@@ -106,6 +107,7 @@
             // 
             // driveFrame
             // 
+            this.driveFrame.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.driveFrame.ForeColor = System.Drawing.Color.White;
             this.driveFrame.Location = new System.Drawing.Point(3, 135);
             this.driveFrame.Name = "driveFrame";
@@ -117,6 +119,7 @@
             // batteryFrame
             // 
             this.batteryFrame.Controls.Add(this.batteryItem);
+            this.batteryFrame.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.batteryFrame.ForeColor = System.Drawing.Color.White;
             this.batteryFrame.Location = new System.Drawing.Point(3, 80);
             this.batteryFrame.Name = "batteryFrame";
@@ -141,6 +144,7 @@
             this.mediaFrame.Controls.Add(this.btn_stop);
             this.mediaFrame.Controls.Add(this.btn_play);
             this.mediaFrame.Controls.Add(this.playerinfo);
+            this.mediaFrame.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.mediaFrame.ForeColor = System.Drawing.Color.White;
             this.mediaFrame.Location = new System.Drawing.Point(3, 212);
             this.mediaFrame.Name = "mediaFrame";
@@ -153,6 +157,7 @@
             // 
             this.btn_stop.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btn_stop.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(48)))));
+            this.btn_stop.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.btn_stop.Location = new System.Drawing.Point(89, 46);
             this.btn_stop.Name = "btn_stop";
             this.btn_stop.Size = new System.Drawing.Size(75, 23);
@@ -165,6 +170,7 @@
             // 
             this.btn_play.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btn_play.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(122)))), ((int)(((byte)(204)))));
+            this.btn_play.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.btn_play.Location = new System.Drawing.Point(6, 46);
             this.btn_play.Name = "btn_play";
             this.btn_play.Size = new System.Drawing.Size(75, 23);
@@ -222,7 +228,8 @@
             // 
             // mainWindow
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(48)))));
             this.ClientSize = new System.Drawing.Size(200, 314);
             this.Controls.Add(this.btn_settings);

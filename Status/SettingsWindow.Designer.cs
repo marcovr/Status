@@ -73,6 +73,7 @@
             // 
             this.batteryFrame.Controls.Add(this.checkbox_battery2);
             this.batteryFrame.Controls.Add(this.checkbox_battery1);
+            this.batteryFrame.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.batteryFrame.ForeColor = System.Drawing.Color.White;
             this.batteryFrame.Location = new System.Drawing.Point(3, 3);
             this.batteryFrame.Name = "batteryFrame";
@@ -84,6 +85,7 @@
             // checkbox_battery2
             // 
             this.checkbox_battery2.AutoSize = true;
+            this.checkbox_battery2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.checkbox_battery2.Location = new System.Drawing.Point(6, 42);
             this.checkbox_battery2.Name = "checkbox_battery2";
             this.checkbox_battery2.Size = new System.Drawing.Size(124, 17);
@@ -96,6 +98,7 @@
             this.checkbox_battery1.AutoSize = true;
             this.checkbox_battery1.Checked = true;
             this.checkbox_battery1.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkbox_battery1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.checkbox_battery1.Location = new System.Drawing.Point(6, 19);
             this.checkbox_battery1.Name = "checkbox_battery1";
             this.checkbox_battery1.Size = new System.Drawing.Size(114, 17);
@@ -110,6 +113,7 @@
             this.mediaFrame.Controls.Add(this.textBox1);
             this.mediaFrame.Controls.Add(this.radioButton1);
             this.mediaFrame.Controls.Add(this.volumeBar);
+            this.mediaFrame.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.mediaFrame.ForeColor = System.Drawing.Color.White;
             this.mediaFrame.Location = new System.Drawing.Point(3, 74);
             this.mediaFrame.Name = "mediaFrame";
@@ -120,6 +124,7 @@
             // 
             // textBox2
             // 
+            this.textBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBox2.Location = new System.Drawing.Point(26, 45);
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(138, 20);
@@ -137,12 +142,12 @@
             // 
             // textBox1
             // 
+            this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBox1.Location = new System.Drawing.Point(26, 19);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(138, 20);
             this.textBox1.TabIndex = 2;
-            this.textBox1.Text = "http://www.swr3.de/wraps/musik/webradio/aplayer/stream_extern.php?format=mp3e&cha" +
-    "nnel=0";
+            this.textBox1.Text = "http://www.swr3.de/wraps/musik/webradio/aplayer/stream_extern.php?format=mp3e&channel=0";
             // 
             // radioButton1
             // 
@@ -183,6 +188,7 @@
             // btn_stop
             // 
             this.btn_stop.BackColor = System.Drawing.Color.Red;
+            this.btn_stop.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btn_stop.ForeColor = System.Drawing.Color.White;
             this.btn_stop.Location = new System.Drawing.Point(92, 3);
             this.btn_stop.Name = "btn_stop";
@@ -195,6 +201,7 @@
             // btn_play
             // 
             this.btn_play.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(122)))), ((int)(((byte)(204)))));
+            this.btn_play.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btn_play.ForeColor = System.Drawing.Color.White;
             this.btn_play.Location = new System.Drawing.Point(6, 3);
             this.btn_play.Name = "btn_play";
@@ -221,8 +228,8 @@
             // 
             // SettingsWindow
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.ClientSize = new System.Drawing.Size(200, 248);
             this.Controls.Add(this.btn_close);
             this.Controls.Add(this.contentPanel);

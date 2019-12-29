@@ -24,10 +24,10 @@ namespace Status
         {
             InitializeComponent();
             UI.window = this;
-            Top = 100;
+            Top = LogicalToDeviceUnits(100);
 
             playerinfo.Visible = false;
-            mediaFrame.Height = 50;
+            mediaFrame.Height = LogicalToDeviceUnits(50);
             UpdateSettings();
 
             slowTimer = new Timer() { Interval = 5000 };
@@ -45,13 +45,16 @@ namespace Status
             playlistkey = new Hotkey(Hotkey.Modifiers.None, Keys.SelectMedia);
             playlistkey.Fired += Playlistkey_Fired;
             playlistkey.Register();
+            Width = LogicalToDeviceUnits(200);
+            btn_settings.Left = LogicalToDeviceUnits(166);
+            btn_close.Left = LogicalToDeviceUnits(182);
         }
 
         private void UpdateFast(object sender, EventArgs e)
         {
             cpuItem.Value = stats.CPULoad;
             ramItem.Value = stats.RAMUsage;
-            Left = Screen.FromControl(this).WorkingArea.Width - 210;
+            Left = Screen.FromControl(this).WorkingArea.Right - LogicalToDeviceUnits(210);
         }
 
         private void UpdateSlow(object sender, EventArgs e)
@@ -80,13 +83,13 @@ namespace Status
                 {
                     DriveItem driveI = new DriveItem(drives[i])
                     {
-                        Location = new Point(4, 17 + i * 22)
+                        Location = new Point(LogicalToDeviceUnits(4), LogicalToDeviceUnits(17 + i * 22))
                     };
                     driveItems.Add(driveI);
                     UI.window.driveFrame.Controls.Add(driveI);
                 }
 
-                driveFrame.Height = 27 + drives.Length * 22;
+                driveFrame.Height = LogicalToDeviceUnits(27 + drives.Length * 22);
             }
             else
             {
@@ -168,7 +171,7 @@ namespace Status
             btn_stop.BackColor = UI.grey;
             playerinfo.Text = "...";
             playerinfo.Visible = false;
-            mediaFrame.Height = 50;
+            mediaFrame.Height = LogicalToDeviceUnits(50);
             UpdateHeight();
         }
 
@@ -205,7 +208,7 @@ namespace Status
             btn_stop.BackColor = UI.blue;
             btn_play.BackColor = UI.grey;
             playerinfo.Visible = true;
-            mediaFrame.Height = 75;
+            mediaFrame.Height = LogicalToDeviceUnits(75);
             UpdateHeight();
         }
 
@@ -271,9 +274,9 @@ namespace Status
 
         private void UpdateHeight()
         {
-            int baseHeight = 93 + (batteryFrame.Visible ? 55 : 0);
+            int baseHeight = LogicalToDeviceUnits(93 + (batteryFrame.Visible ? 55 : 0));
             contentPanel.Height = baseHeight + driveFrame.Height + mediaFrame.Height;
-            Height = contentPanel.Height + 20;
+            Height = contentPanel.Height + LogicalToDeviceUnits(20);
         }
     }
 }
